@@ -17,6 +17,11 @@ body
     margin: 0 auto
     box-sizing: border-box
     padding: 30px 25px
+    .content
+        margin-left: -20px  
+        margin-right: -20px  
+        padding: 0 20px
+        overflow-x: auto
 .row 
     display: flex
     position: relative
@@ -30,10 +35,11 @@ body
     margin: 1px
     border-radius: 5px
     font-weight: 300
-    height: 50px
+    height: 40px
     display: flex
     align-items: center
     justify-content: center
+    min-width: 45px
     transition-duration: .5s
     &:not(.item_mediumColl)
         &:not([id^=summRow])
@@ -87,3 +93,40 @@ body
             @extend %message-shared
         &::after
             transform: rotate(180deg)
+
+.wrap_input_def
+    display: flex
+    flex-wrap: wrap
+    align-items: flex-end
+    margin-bottom: 10px
+    .submit
+        transition-duration: .3s
+        &:hover
+            cursor: pointer
+            opacity: .8 
+
+.label_text
+    text-align: center
+    padding: 0 10px
+    font-size: 12px    
+.input_def
+    height: 40px
+    width: 100%
+    padding: 5px
+    display: block
+    width: 100%
+    box-sizing: border-box
+.title_input_def
+    font-weight: 500
+    width: 100%
+    text-align: center
+    margin-bottom: 20px
+.label_wrap
+    width: 25%  
+    padding: 0 1px
+    box-sizing: border-box
+input:invalid 
+    border: 2px solid lighten($second-color, 25%)
+
+input:valid 
+    border: 2px solid lighten($base-color, 35%)

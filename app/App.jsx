@@ -4,13 +4,14 @@ import './style.sass';
 
 import Item from "./Item.jsx";
 import RowDelite from "./RowDelite.jsx";
-import AddDelite from "./AddDelite.jsx";
+import AddRow from "./AddRow.jsx";
+import AddStartData from "./AddStartData.jsx";
 
 class App extends Component {
     render() {
         return (
             <div className="wrap">
-
+                <AddStartData></AddStartData>
                 <div className="content">
 
                     {this.props.table[0].data.map((row, parentindex) =>
@@ -19,7 +20,7 @@ class App extends Component {
                             id={"row_" + parentindex}>
 
                             <RowDelite index={parentindex}></RowDelite>
-                            <AddDelite index={parentindex}></AddDelite>
+                            <AddRow index={parentindex}></AddRow>
                             {row.data.map((item, index) =>
 
                                 <Item

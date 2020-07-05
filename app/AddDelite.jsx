@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
 
-class AddDelite extends Component {
+class AddRow extends Component {
     add() {
         this.props.onAdd({
             index: this.props.index
@@ -10,7 +10,7 @@ class AddDelite extends Component {
     render() {
         return (
             <div
-                title="Add a line here"
+                title="Add a row here"
                 className="addRow button"
                 onClick={this.add.bind(this)}
             ></div>
@@ -28,4 +28,4 @@ export default connect(
             dispatch({ type: 'ADD_ROW', payload: index })
         }
     })
-)(AddDelite);
+)(AddRow);

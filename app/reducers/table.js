@@ -1,5 +1,5 @@
-let m = 3,
-    n = 4,
+let m = 4,
+    n = 3,
     x = 3;
 
 let randomInteger = function (min, max) {
@@ -79,7 +79,11 @@ let defaultData = getDefaultData(m, n);
 
 let initialState = [
     defaultData,
-    x
+    {
+        collInput: n,
+        rowInput: m,
+        x: x
+    }
 ];
 
 let getPercent = function (state, pID, ID) {
@@ -110,6 +114,9 @@ let getMediumColl = function (state, id) {
     return result;
 }
 let similarValues = function (state, action) {
+    if (!state[0].data[1]) {
+        return;
+    }
     let arr = [];
     for (let i = 0; i < state[0].data.length; i++) {
         for (let q = 0; q < state[0].data[i].data.length; q++) {
@@ -124,7 +131,7 @@ let similarValues = function (state, action) {
     let index = arr.findIndex((el) => {
         return el.ID === state[0].data[action.pID].data[action.ID].ID
     })
-    let cur = state[1];
+    let cur = state[1].x;
     let similar = [];
     arr.splice(index, 1)
 
@@ -144,11 +151,14 @@ let similarValues = function (state, action) {
     return similar;
 }
 
-export default function playlists(state = initialState, action) {
+export default function table(state = initialState, action) {
+
     if (action.type === "INCREMENT") {
         let arrSimilar = similarValues(state, action.payload);
-        for (let i = 0; i < arrSimilar.length; i++) {
-            state[0].data[arrSimilar[i].pID].data[arrSimilar[i].cID].similar = false;
+        if (arrSimilar) {
+            for (let i = 0; i < arrSimilar.length; i++) {
+                state[0].data[arrSimilar[i].pID].data[arrSimilar[i].cID].similar = false;
+            }
         }
 
         state[0].data[action.payload.pID].data[action.payload.ID].Amount++
@@ -163,8 +173,10 @@ export default function playlists(state = initialState, action) {
         state[0].data[action.payload.pID].summRow.percent = percent;
 
         let arrSimilar2 = similarValues(state, action.payload);
-        for (let i = 0; i < arrSimilar2.length; i++) {
-            state[0].data[arrSimilar2[i].pID].data[arrSimilar2[i].cID].similar = true;
+        if (arrSimilar2) {
+            for (let i = 0; i < arrSimilar2.length; i++) {
+                state[0].data[arrSimilar2[i].pID].data[arrSimilar2[i].cID].similar = true;
+            }
         }
 
         return [
@@ -175,8 +187,10 @@ export default function playlists(state = initialState, action) {
     if (action.type === "HOVER") {
 
         let arrSimilar = similarValues(state, action.payload);
-        for (let i = 0; i < arrSimilar.length; i++) {
-            state[0].data[arrSimilar[i].pID].data[arrSimilar[i].cID].similar = true;
+        if (arrSimilar) {
+            for (let i = 0; i < arrSimilar.length; i++) {
+                state[0].data[arrSimilar[i].pID].data[arrSimilar[i].cID].similar = true;
+            }
         }
 
         let percent = getPercent(state, action.payload.pID, action.payload.ID);
@@ -188,8 +202,10 @@ export default function playlists(state = initialState, action) {
     }
     if (action.type === "OF_HOVER") {
         let arrSimilar = similarValues(state, action.payload);
-        for (let i = 0; i < arrSimilar.length; i++) {
-            state[0].data[arrSimilar[i].pID].data[arrSimilar[i].cID].similar = false;
+        if (arrSimilar) {
+            for (let i = 0; i < arrSimilar.length; i++) {
+                state[0].data[arrSimilar[i].pID].data[arrSimilar[i].cID].similar = false;
+            }
         }
 
         state[0].data[action.payload.pID].summRow.percent = 0;
@@ -207,9 +223,23 @@ export default function playlists(state = initialState, action) {
     }
     if (action.type === "ADD_ROW") {
         let indexNewRow = action.payload.index + 1;
-        let row = getDefaultData(1, n, false);
+        let colls = state[1] ? state[1].collInput : n;
+        let row = getDefaultData(1, colls, false);
         state[0].data.splice(indexNewRow, 0, row.data[0])
         refreshMediumColl(state[0]);
+        return [
+            ...state
+        ]
+    }
+
+    if (action.type === "ADD_START_DATA") {
+        state[1] = {};
+        state[1].collInput = action.payload.collInput;
+        state[1].rowInput = action.payload.rowInput;
+        state[1].x = action.payload.x;
+
+        let data = getDefaultData(state[1].rowInput, state[1].collInput);
+        state[0] = data;
         return [
             ...state
         ]
