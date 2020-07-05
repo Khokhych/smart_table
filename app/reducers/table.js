@@ -219,6 +219,7 @@ export default function table(state = initialState, action) {
             state[0].data.splice(action.payload.ID, 1);
             refreshMediumColl(state[0]);
         } else {
+            state[0].mediumColl = [];
             state[0].data = [];
         }
         return [
