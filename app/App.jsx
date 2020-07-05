@@ -47,7 +47,7 @@ class App extends Component {
                     )}
                     {
                         <div className={"row row_mediumColl"} id={"row_mediumColl"}>
-
+                            <AddRow index={"end"}></AddRow>
                             {this.props.table[0].mediumColl.map((item, index) =>
                                 <span className={"item item_mediumColl"} id={"item_mediumColl_" + index} > {item}</span>
                             )}

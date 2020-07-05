@@ -47,7 +47,6 @@ class AddStartData extends Component {
                         title="number 1 or more" required min="1" id="input_x" placeholder="x" type="number" ref={x => this.x = x} />
                 </label>
 
-
                 <div className="label_wrap">
                     <input
                         className="submit input_def"

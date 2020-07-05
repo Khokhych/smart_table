@@ -215,14 +215,24 @@ export default function table(state = initialState, action) {
         ]
     }
     if (action.type === "DELITE") {
-        state[0].data.splice(action.payload.ID, 1);
-        refreshMediumColl(state[0]);
+        if (state[0].data.length !== 1) {
+            state[0].data.splice(action.payload.ID, 1);
+            refreshMediumColl(state[0]);
+        } else {
+            state[0].data = [];
+        }
         return [
             ...state
         ]
     }
     if (action.type === "ADD_ROW") {
-        let indexNewRow = action.payload.index + 1;
+        let indexNewRow;
+        if (action.payload.index >= 0) {
+            indexNewRow = action.payload.index;
+        } else {
+            indexNewRow = state[0].data.length;
+        }
+        console.log(indexNewRow);
         let colls = state[1] ? state[1].collInput : n;
         let row = getDefaultData(1, colls, false);
         state[0].data.splice(indexNewRow, 0, row.data[0])
