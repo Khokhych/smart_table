@@ -1,0 +1,89 @@
+$base-color: #40b3a2
+$second-color: #de3143
+%message-shared
+    transition-duration: .3s
+    position: absolute
+    left: calc(100% / 2  - 1px)
+    content: ' '
+    height: 100%
+    width: 1px
+    background-color: #fff
+    transform: rotate(90deg)
+body
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
+    margin: 0
+.wrap
+    max-width: 1170px
+    margin: 0 auto
+    box-sizing: border-box
+    padding: 30px 25px
+.row 
+    display: flex
+    position: relative
+.item_mediumColl_clear
+    visibility: hidden
+.item
+    text-align: center
+    width: 100%
+    color: darken($base-color, 30%)
+    border: 2px solid $base-color
+    margin: 1px
+    border-radius: 5px
+    font-weight: 300
+    height: 50px
+    display: flex
+    align-items: center
+    justify-content: center
+    transition-duration: .5s
+    &:not(.item_mediumColl)
+        &:not([id^=summRow])
+            &:hover
+                cursor: pointer
+                user-select: none
+                background-color: lighten($base-color, 45%)
+
+.item_mediumColl,
+[id^=summRow]
+    font-weight: 500
+
+[id^=summRow]
+    position: relative
+.summRow_cont
+    position: relative
+    z-index: 2
+.summRow_bg
+    transition-duration: .3s
+    position: absolute
+    right: 0
+    bottom: 0
+    left: 0
+    background-color: $base-color
+    z-index: 1
+.similar
+    background-color: lighten($base-color, 25%)
+
+.button
+    width: 15px
+    height: 15px
+    border-radius: 50%
+    transition-duration: .3s
+    position: absolute
+    z-index: 2
+    &:hover
+        cursor: pointer
+        opacity: .5
+    &.rowDelite 
+        background-color: lighten($second-color, 15%)
+        left: -16px
+        top: calc(50% - 10px)
+        &::before
+            @extend %message-shared
+    &.addRow
+        left: -16px
+        bottom: -7px
+        background-color: lighten($base-color, 15%)
+        &::after,
+        &::before
+            @extend %message-shared
+        &::after
+            transform: rotate(180deg)
